@@ -18,6 +18,53 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        var maxField = 10; //Input fields increment limitation
+        var addButton = $('.add_button'); //Add button selector
+        var wrapper = $('.field_wrapper'); //Input field wrapper
+        var fieldHTML = '<div class="form-group row"><label for="attr_values[]" class="col-md-4 col-form-label text-md-right">Attribute Values</label><div class="col-md-6"><input id="attr_values[]" type="text" class="form-control @error('attr_values[]') is-invalid @enderror" name="attr_values[]" autocomplete="attr_values[]"><a href="javascript:void(0);" class="remove_button" title="Add field"><button>Remove</button></a></div> </div>'; //New input field html 
+        var x = 1; //Initial field counter is 1
+        
+        //Once add button is clicked
+        $(addButton).click(function(){
+            //Check maximum number of input fields
+            if(x < maxField){ 
+                x++; //Increment field counter
+                $(wrapper).append(fieldHTML); //Add field html
+            }
+        });
+        
+        //Once remove button is clicked
+        $(wrapper).on('click', '.remove_button', function(e){
+            e.preventDefault();
+            $(this).parent('div').parent('div').remove(); //Remove field html
+            x--; //Decrement field counter
+        });
+
+        $(".remove_button").on("click", function(){
+            // e.preventDefault();
+            $(this).parent('div').parent('div').remove(); //Remove field html
+            x--; //Decrement field counter
+        })
+
+        $("#field_type").on("change", function(){
+            if($(this).val() == "select"){
+                $(".field_wrapper").show();
+            }else{
+                $(".field_wrapper").hide();
+            }
+        })
+    });
+    </script>
+
+    <style>
+        li{
+            font-size: 20px;
+            border: 1px dashed;
+        }
+    </style>
 </head>
 <body>
     <div id="app">

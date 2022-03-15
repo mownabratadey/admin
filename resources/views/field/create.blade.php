@@ -23,7 +23,7 @@
                             <label for="field_type" class="col-md-4 col-form-label text-md-right">Field Type</label>
 
                             <div class="col-md-6">
-                                <select class="form-control" name="field_type">
+                                <select id="field_type" class="form-control" name="field_type">
                                     <option value="text">Text</option>
                                     <option value="number">Number</option>
                                     <option value="select">Select</option>
@@ -65,25 +65,24 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="attr_values" class="col-md-4 col-form-label text-md-right">Attribute Values</label>
+                        <div class="field_wrapper" style="display: none">
+                            <div class="form-group row">
+                                <label for="attr_values[]" class="col-md-4 col-form-label text-md-right">Attribute Values</label>
 
-                            <div class="col-md-6">
-                                <input id="attr_values" type="text" class="form-control @error('attr_values') is-invalid @enderror" name="attr_values" value="{{ old('attr_values') }}" required autocomplete="attr_values">
-
-                                @error('attr_values')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                <div class="col-md-6">
+                                    <input id="attr_values[]" type="text" class="form-control @error('attr_values[]') is-invalid @enderror" name="attr_values[]" autocomplete="attr_values[]">
+                                    <a href="javascript:void(0);" class="add_button" title="Add field"><button type="button">Add More</button></a>
+                                </div>
                             </div>
                         </div>
+
+                        
 
                         <div class="form-group row">
                             <label for="comments" class="col-md-4 col-form-label text-md-right">Comments</label>
 
                             <div class="col-md-6">
-                                <input id="comments" type="text" class="form-control @error('comments') is-invalid @enderror" name="comments" value="{{ old('comments') }}" required autocomplete="comments">
+                                <input id="comments" type="text" class="form-control @error('comments') is-invalid @enderror" name="comments" value="{{ old('comments') }}" autocomplete="comments">
 
                                 @error('comments')
                                     <span class="invalid-feedback" role="alert">
@@ -111,4 +110,6 @@
         </div>
     </div>
 </div>
+
+
 @endsection

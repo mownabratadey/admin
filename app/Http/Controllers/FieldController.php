@@ -47,8 +47,13 @@ class FieldController extends Controller
         $field->label = $request->label;
         $field->field_name = $request->field_name;
         $field->comments = $request->comments;
+        $updated_attr = [];
         if($request->attr_values){
-            $field->attr_values = $request->attr_values;
+            foreach ($request->attr_values as $value) {
+                if($value != null && $value != "")
+                $updated_attr[] = $value;
+            }
+            $field->attr_values = json_encode($updated_attr);
         }
 
         $field->save();
@@ -98,8 +103,13 @@ class FieldController extends Controller
         $field->label = $request->label;
         $field->field_name = $request->field_name;
         $field->comments = $request->comments;
+        $updated_attr = [];
         if($request->attr_values){
-            $field->attr_values = $request->attr_values;
+            foreach ($request->attr_values as $value) {
+                if($value != null && $value != "")
+                $updated_attr[] = $value;
+            }
+            $field->attr_values = json_encode($updated_attr);
         }
 
         $field->save();

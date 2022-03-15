@@ -5,8 +5,8 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">
-                    Add New Field
+                <div class="card-header" style="font-size: 20px;">
+                    Edit Field
                 </div>
 
                 <div class="card-body">
@@ -24,10 +24,10 @@
                             <label for="field_type" class="col-md-4 col-form-label text-md-right">Field Type</label>
 
                             <div class="col-md-6">
-                                <select class="form-control" name="field_type">
-                                    <option value="text">Text</option>
-                                    <option value="number">Number</option>
-                                    <option value="select">Select</option>
+                                <select id="field_type" class="form-control" name="field_type">
+                                    <option value="text" {{ $field->field_type == "text" ? "selected" : "" }}>Text</option>
+                                    <option value="number" {{ $field->field_type == "number" ? "selected" : "" }}>Number</option>
+                                    <option value="select" {{ $field->field_type == "select" ? "selected" : "" }}>Select</option>
                                 </select>
 
                                 @error('field_type')
@@ -66,17 +66,32 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="attr_values" class="col-md-4 col-form-label text-md-right">Attribute Values</label>
+                        @php
+                        $arr = json_decode($field->attr_values);
+                        @endphp
+                        @if(!empty($arr))
+                        @foreach($arr as $arr1)
+                        <div class="">
+                            <div class="form-group row">
+                                <label for="attr_values[]" class="col-md-4 col-form-label text-md-right">Attribute Values</label>
 
-                            <div class="col-md-6">
-                                <input id="attr_values" type="text" class="form-control @error('attr_values') is-invalid @enderror" name="attr_values" value="" required autocomplete="attr_values">
+                                <div class="col-md-6">
+                                    <input id="attr_values[]" type="text" class="form-control" name="attr_values[]" autocomplete="attr_values[]" value="{{ $arr1 }}">
+                                    <a href="javascript:void(0);" class="remove_button" title="Remove field"><button type="button">Remove</button></a>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                        @endif
 
-                                @error('attr_values')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                        <div class="field_wrapper" style="display: none">
+                            <div class="form-group row">
+                                <label for="attr_values[]" class="col-md-4 col-form-label text-md-right">Attribute Values</label>
+
+                                <div class="col-md-6">
+                                    <input id="attr_values[]" type="text" class="form-control @error('attr_values[]') is-invalid @enderror" name="attr_values[]" autocomplete="attr_values[]">
+                                    <a href="javascript:void(0);" class="add_button" title="Add field"><button type="button">Add More</button></a>
+                                </div>
                             </div>
                         </div>
 
@@ -84,7 +99,7 @@
                             <label for="comments" class="col-md-4 col-form-label text-md-right">Comments</label>
 
                             <div class="col-md-6">
-                                <input id="comments" type="text" class="form-control @error('comments') is-invalid @enderror" name="comments" value="{{ $field->comments }}" required autocomplete="comments">
+                                <input id="comments" type="text" class="form-control @error('comments') is-invalid @enderror" name="comments" value="{{ $field->comments }}" autocomplete="comments">
 
                                 @error('comments')
                                     <span class="invalid-feedback" role="alert">
@@ -99,7 +114,7 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    Add Field
+                                    Update
                                 </button>
                             </div>
                         </div>
